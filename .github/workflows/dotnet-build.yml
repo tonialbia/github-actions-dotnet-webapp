@@ -1,0 +1,25 @@
+name: Github4Women
+
+on:
+  push:
+  schedule:
+    - cron: '0 * * * *'  # Executa a cada hora (no minuto 0)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Rodar script ou comando
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  # Ajuste para a versão que você usa
+
+      - name: Restaurar dependências
+        run: dotnet restore github4women/github4women.csproj
+
+      - name: Build do projeto
+        run: dotnet build github4women/github4women.csproj --no-restore --configuration Release
